@@ -17,7 +17,8 @@ AFRAME.registerComponent('checkbox', {
     letterSpacing: { type: "int", default: 0 },
     lineHeight: { type: "string", default: "" },
     opacity: { type: "number", default: 1 },
-    width: { type: "number", default: 1 }
+    width: { type: "number", default: 1 },
+    mute: { type: "boolean", default: true }
   },
   init: function () {
     var that = this;
@@ -26,7 +27,9 @@ AFRAME.registerComponent('checkbox', {
     Utils.preloadAssets( Assets );
 
     // SFX
-    SFX.init(this.el);
+    if (!this.data.mute) {
+      SFX.init(this.el);
+    }
 
     // HITBOX
     this.hitbox = document.createElement('a-plane');
@@ -72,9 +75,14 @@ AFRAME.registerComponent('checkbox', {
     });
     this.el.addEventListener('mousedown', function() {
       if (this.components.checkbox.data.disabled) {
-        return SFX.clickDisabled(this);
+        if (!this.data.mute) {
+          return SFX.clickDisabled(this);
+        }
+        return;
       }
-      SFX.click(this);
+      if (!this.data.mute) {
+        SFX.click(this);
+      }
     });
 
     Object.defineProperty(this.el, 'value', {
@@ -200,6 +208,7 @@ AFRAME.registerPrimitive('a-checkbox', {
     'letter-spacing': 'checkbox.letterSpacing',
     'line-height': 'checkbox.lineHeight',
     'opacity': 'checkbox.opacity',
-    width: 'checkbox.width'
+    width: 'checkbox.width',
+    mute: 'checkbox.mute'
   }
 });

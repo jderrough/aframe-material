@@ -17,7 +17,8 @@ AFRAME.registerComponent('radio', {
     letterSpacing: { type: "int", default: 0 },
     lineHeight: { type: "string", default: "" },
     opacity: { type: "number", default: 1 },
-    width: { type: "number", default: 1 }
+    width: { type: "number", default: 1 },
+    mute: { type: "boolean", default: true }
   },
   init: function () {
     var that = this;
@@ -26,7 +27,9 @@ AFRAME.registerComponent('radio', {
     Utils.preloadAssets( Assets );
 
     // SFX
-    SFX.init(this.el);
+    if (!this.data.mute) {
+      SFX.init(this.el);
+    }
 
     // HITBOX
     this.hitbox = document.createElement('a-plane');
@@ -60,9 +63,14 @@ AFRAME.registerComponent('radio', {
     });
     this.el.addEventListener('mousedown', function() {
       if (this.components.radio.data.disabled) {
-        return SFX.clickDisabled(this);
+        if (!this.data.mute) {
+          return SFX.clickDisabled(this);
+        }
+        return;
       }
-      SFX.click(this);
+      if (!this.data.mute) {
+        SFX.click(this);
+      }
     });
 
     Object.defineProperty(this.el, 'value', {
@@ -213,6 +221,7 @@ AFRAME.registerPrimitive('a-radio', {
     'letter-spacing': 'radio.letterSpacing',
     'line-height': 'radio.lineHeight',
     'opacity': 'radio.opacity',
-    width: 'radio.width'
+    width: 'radio.width',
+    mute: 'radio.mute'
   }
 });

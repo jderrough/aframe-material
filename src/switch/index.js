@@ -13,7 +13,8 @@ AFRAME.registerComponent('switch', {
     fillColorEnabled: { type: "color", default: "#80a8ff" },
     knobColorEnabled: { type: "color", default: "#4076fd" },
     fillColorDisabled: { type: "color", default: "#939393" },
-    knobColorDisabled: { type: "color", default: "#a2a2a2" }
+    knobColorDisabled: { type: "color", default: "#a2a2a2" },
+    mute: { type: "boolean", default: true }
   },
   init: function () {
     var that = this;
@@ -22,7 +23,9 @@ AFRAME.registerComponent('switch', {
     Utils.preloadAssets( Assets );
 
     // SFX
-    SFX.init(this.el);
+    if (!this.data.mute) {
+      SFX.init(this.el);
+    }
 
     // FILL
     this.el.fill = document.createElement('a-rounded');
@@ -55,9 +58,14 @@ AFRAME.registerComponent('switch', {
     });
     this.el.addEventListener('mousedown', function() {
       if (this.components.switch.data.disabled) {
-        return SFX.clickDisabled(this);
+        if (!this.data.mute) {
+          return SFX.clickDisabled(this);
+        }
+        return;
       }
-      SFX.click(this);
+      if (!this.data.mute) {
+        SFX.click(this);
+      }
     });
 
     Object.defineProperty(this.el, 'enabled', {
@@ -110,6 +118,7 @@ AFRAME.registerPrimitive('a-switch', {
     'fill-color-enabled': 'switch.fillColorEnabled',
     'knob-color-enabled': 'switch.knobColorEnabled',
     'fill-color-disabled': 'switch.fillColorDisabled',
-    'knob-color-disabled': 'switch.knobColorDisabled'
+    'knob-color-disabled': 'switch.knobColorDisabled',
+    mute: 'switch.mute'
   }
 });

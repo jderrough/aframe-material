@@ -15,7 +15,8 @@ AFRAME.registerComponent('button', {
     letterSpacing: { type: "int", default: 0 },
     lineHeight: { type: "string", default: "" },
     opacity: { type: "number", default: 1 },
-    width: { type: "number", default: 1 }
+    width: { type: "number", default: 1 },
+    mute: { type: "boolean", default: true }
   },
   init: function () {
     var that = this;
@@ -24,7 +25,9 @@ AFRAME.registerComponent('button', {
     Utils.preloadAssets( Assets );
 
     // SFX
-    SFX.init(this.el);
+    if (!this.data.mute) {
+      SFX.init(this.el);
+    }
 
     this.wrapper = document.createElement('a-entity');
     this.wrapper.setAttribute('position', '0 0 0.01')
@@ -53,10 +56,15 @@ AFRAME.registerComponent('button', {
     });
     this.el.addEventListener('mousedown', function() {
       if (this.components.button && this.components.button.data.disabled) {
-        return SFX.clickDisabled(this);
+        if (!this.data.mute) {
+          return SFX.clickDisabled(this);
+        }
+        return;
       }
       that.wrapper.setAttribute('position', `0 0 0.036`);
-      SFX.click(this);
+      if (!this.data.mute) {
+        SFX.click(this);
+      }
     });
     this.el.addEventListener('mouseup', function() {
       if (this.components.button && this.components.button.data.disabled) { return; }
@@ -194,6 +202,7 @@ AFRAME.registerPrimitive('a-button', {
     'letter-spacing': 'button.letterSpacing',
     'line-height': 'button.lineHeight',
     'opacity': 'button.opacity',
-    'width': 'button.width'
+    'width': 'button.width',
+    mute: 'button.mute'
   }
 });

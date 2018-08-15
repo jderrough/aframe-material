@@ -15,7 +15,8 @@ AFRAME.registerComponent('toast', {
     lineHeight: { type: "string", default: "" },
     width: { type: "number", default: 3 },
     duration: { type: 'number', default: 2000 },
-    autoshow: { type: 'boolean', default: true }
+    autoshow: { type: 'boolean', default: true },
+    mute: { type: "boolean", default: true }
   },
   init: function () {
     var that = this;
@@ -24,7 +25,9 @@ AFRAME.registerComponent('toast', {
     Utils.preloadAssets( Assets );
 
     // SFX
-    SFX.init(this.el);
+    if (!this.data.mute) {
+      SFX.init(this.el);
+    }
 
     // CONFIG
     this.el.setAttribute("position", `10000 10000 10000`);
@@ -95,7 +98,9 @@ AFRAME.registerComponent('toast', {
       that.hide();
     }, this.data.duration);
 
-    SFX.show(this.el);
+    if (!this.data.mute) {
+      SFX.show(this.el);
+    }
   },
   hide: function() {
     let that = this;
@@ -164,6 +169,7 @@ AFRAME.registerPrimitive('a-toast', {
     'line-height': 'toast.lineHeight',
     'width': 'toast.width',
     'duration': 'toast.duration',
-    'autoshow': 'toast.autoshow'
+    'autoshow': 'toast.autoshow',
+    mute: 'toast.mute'
   }
 });

@@ -111,7 +111,9 @@ Behaviors.addKeyEvents = (el)=>{
 // KEYCLICK
 
 Behaviors.keyClick = function() {
-  SFX.keyDown(Behaviors.el);
+  if (!Behaviors.el.data.mute) {
+    SFX.keyDown(Behaviors.el);
+  }
 
   let type = this.getAttribute('key-type');
   let value = this.getAttribute('key-value');
@@ -166,7 +168,9 @@ Behaviors.keyIn = function() {
   if (this.object3D.children[2] && this.object3D.children[2].material && !this.object3D.children[2].material.opacity) {
     return
   }
-  SFX.keyIn(Behaviors.el);
+  if (!Behaviors.el.data.mute) {
+    SFX.keyIn(Behaviors.el);
+  }
   if (this.getAttribute('key-type') === 'spacebar') {
     this.setAttribute('color', Config.SPACEBAR_COLOR_HIGHLIGHT);
   } else {

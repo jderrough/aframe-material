@@ -7,14 +7,17 @@ const Event = require('../core/event');
 AFRAME.registerComponent('keyboard', {
   schema: {
     isOpen: { type: "boolean", default: false },
-    physicalKeyboard: { type: "boolean", default: false }
+    physicalKeyboard: { type: "boolean", default: false },
+    mute: { type: "boolean", default: true }
   },
   currentInput: null,
   init: function () {
     let that = this;
 
     // SFX
-    SFX.init(this.el);
+    if (!this.data.mute) {
+      SFX.init(this.el);
+    }
 
     // Draw
     Draw.init( this.el );
@@ -146,5 +149,6 @@ AFRAME.registerPrimitive('a-keyboard', {
   mappings: {
     'is-open': 'keyboard.isOpen',
     'physical-keyboard': 'keyboard.physicalKeyboard',
+    mute: 'keyboard.mute'
   }
 });
