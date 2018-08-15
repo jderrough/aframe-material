@@ -1816,7 +1816,9 @@
 	    var that = this;
 	
 	    // Assets
-	    Utils.preloadAssets(Assets);
+	    Utils.preloadAssets(Assets.filter(function (a) {
+	      return !(that.data.mute && a.type === 'audio');
+	    }));
 	
 	    // SFX
 	    if (!this.data.mute) {
@@ -1856,12 +1858,12 @@
 	    });
 	    this.el.addEventListener('mousedown', function () {
 	      if (this.components.switch.data.disabled) {
-	        if (!this.data.mute) {
+	        if (!this.components.switch.data.mute) {
 	          return SFX.clickDisabled(this);
 	        }
 	        return;
 	      }
-	      if (!this.data.mute) {
+	      if (!this.components.switch.data.mute) {
 	        SFX.click(this);
 	      }
 	    });
@@ -2036,7 +2038,9 @@
 	    var that = this;
 	
 	    // Assets
-	    Utils.preloadAssets(Assets);
+	    Utils.preloadAssets(Assets.filter(function (a) {
+	      return !(that.data.mute && a.type === 'audio');
+	    }));
 	
 	    // SFX
 	    if (!this.data.mute) {
@@ -2077,12 +2081,12 @@
 	    });
 	    this.el.addEventListener('mousedown', function () {
 	      if (this.components.radio.data.disabled) {
-	        if (!this.data.mute) {
+	        if (!this.components.radio.data.mute) {
 	          return SFX.clickDisabled(this);
 	        }
 	        return;
 	      }
-	      if (!this.data.mute) {
+	      if (!this.components.radio.data.mute) {
 	        SFX.click(this);
 	      }
 	    });
@@ -2369,7 +2373,9 @@
 	    var that = this;
 	
 	    // Assets
-	    Utils.preloadAssets(Assets);
+	    Utils.preloadAssets(Assets.filter(function (a) {
+	      return !(that.data.mute && a.type === 'audio');
+	    }));
 	
 	    // SFX
 	    if (!this.data.mute) {
@@ -2422,12 +2428,12 @@
 	    });
 	    this.el.addEventListener('mousedown', function () {
 	      if (this.components.checkbox.data.disabled) {
-	        if (!this.data.mute) {
+	        if (!this.components.checkbox.data.mute) {
 	          return SFX.clickDisabled(this);
 	        }
 	        return;
 	      }
-	      if (!this.data.mute) {
+	      if (!this.components.checkbox.data.mute) {
 	        SFX.click(this);
 	      }
 	    });
@@ -2947,7 +2953,9 @@
 	    var that = this;
 	
 	    // Assets
-	    Utils.preloadAssets(Assets);
+	    Utils.preloadAssets(Assets.filter(function (a) {
+	      return !(that.data.mute && a.type === 'audio');
+	    }));
 	
 	    // SFX
 	    if (!this.data.mute) {

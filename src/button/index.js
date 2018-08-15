@@ -22,7 +22,7 @@ AFRAME.registerComponent('button', {
     var that = this;
 
     // Assets
-    Utils.preloadAssets( Assets.filter(function (a) { return !(that.data.mute && a.type === 'audio'); }));
+    Utils.preloadAssets(Assets.filter(function (a) { return !(that.data.mute && a.type === 'audio'); }));
 
     // SFX
     if (!this.data.mute) {
