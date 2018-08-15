@@ -2664,7 +2664,7 @@
 	
 	    // Assets
 	    Utils.preloadAssets(Assets.filter(function (a) {
-	      return !(this.data.mute && a.type === 'audio');
+	      return !(that.data.mute && a.type === 'audio');
 	    }));
 	
 	    // SFX
