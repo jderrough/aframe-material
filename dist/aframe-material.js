@@ -2701,13 +2701,13 @@
 	    });
 	    this.el.addEventListener('mousedown', function () {
 	      if (this.components.button && this.components.button.data.disabled) {
-	        if (!this.data.mute) {
+	        if (!this.components.button.data.mute) {
 	          return SFX.clickDisabled(this);
 	        }
 	        return;
 	      }
 	      that.wrapper.setAttribute('position', '0 0 0.036');
-	      if (!this.data.mute) {
+	      if (!this.components.button.data.mute) {
 	        SFX.click(this);
 	      }
 	    });
